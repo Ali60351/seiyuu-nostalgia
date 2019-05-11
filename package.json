@@ -32,10 +32,12 @@
     "env": {
       "node": true
     },
-    "extends": "vuetify",
-    "rules": {},
+    "extends": "plugin:vue/recommended",
     "parserOptions": {
       "parser": "babel-eslint"
+    },
+    "rules": {
+      "quotes": ["error", "single"]
     }
   },
   "postcss": {
