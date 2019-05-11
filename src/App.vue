@@ -11,24 +11,20 @@
     </v-toolbar>
     <NavigationDrawer @switchColor="dark = !dark" />
     <v-content>
-      <HelloWorld
-        :title="value"
-        @increment="value++"
-        @switchColor="dark = !dark"
-      />
+      <Search/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
 import NavigationDrawer from './components/NavigationDrawer'
+import Search from './components/Search'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-    NavigationDrawer
+    NavigationDrawer,
+    Search
   },
   data () {
     return {
