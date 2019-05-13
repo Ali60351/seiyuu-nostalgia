@@ -12,7 +12,7 @@
               label="Enter AnimeList Username"
               :loading="loading"
               @click:append="handleSubmit"
-              @change="e => username = e"
+              v-model="username"
             />
           </v-form>
         </v-flex>
