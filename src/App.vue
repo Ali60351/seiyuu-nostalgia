@@ -4,10 +4,11 @@
       app
       clipped-left
     >
+      <v-toolbar-side-icon @click="toggleDrawer"/>
       <v-toolbar-title>Seiyuu Nostalgia</v-toolbar-title>
       <v-spacer />
     </v-toolbar>
-    <NavigationDrawer @switchColor="dark = !dark" />
+    <NavigationDrawer ref="drawer" @switchColor="dark = !dark" />
     <v-content>
       <v-stepper
         v-model="step"
@@ -58,6 +59,9 @@ export default {
   methods: {
     showSnackbar: function(type, message) {
       this.$refs.snackbar.show(type, message)
+    },
+    toggleDrawer: function() {
+      this.$refs.drawer.toggleDrawer()
     },
     setList: function(value) {
       this.animeList = value

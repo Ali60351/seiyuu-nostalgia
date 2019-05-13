@@ -6,6 +6,7 @@
     mini-variant
     clipped
     enable-resize-watcher
+    v-model="drawer"
   >
     <v-list>
       <v-list-tile
@@ -29,6 +30,7 @@
 export default {
   data: function() {
     return {
+      drawer: true,
       items: [
         {
           title: "New",
@@ -41,6 +43,9 @@ export default {
   methods: {
     switchColor: function() {
       this.$emit("switchColor");
+    },
+    toggleDrawer: function() {
+      this.drawer = !this.drawer
     }
   }
 };
