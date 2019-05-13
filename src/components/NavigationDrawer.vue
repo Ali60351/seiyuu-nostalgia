@@ -1,7 +1,19 @@
 <template>
-  <v-navigation-drawer persistent fixed app mini-variant clipped enable-resize-watcher>
+  <v-navigation-drawer
+    persistent
+    fixed
+    app
+    mini-variant
+    clipped
+    enable-resize-watcher
+  >
     <v-list>
-      <v-list-tile v-for="item in items" :key="item.title" ripple @click="item.action">
+      <v-list-tile
+        v-for="item in items"
+        :key="item.title"
+        ripple
+        @click="item.action"
+      >
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
