@@ -23,7 +23,7 @@
           >
             <v-flex xs12>
               <v-stepper-content step="1">
-                <FetchList />
+                <FetchList @setList="setList" @showSnackbar="showSnackbar"/>
               </v-stepper-content>
             </v-flex>
           </v-layout>
@@ -58,6 +58,10 @@ export default {
   methods: {
     showSnackbar: function(type, message) {
       this.$refs.snackbar.show(type, message)
+    },
+    setList: function(value) {
+      this.animeList = value
+      this.step = 2
     }
   }
 };

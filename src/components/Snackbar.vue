@@ -2,6 +2,7 @@
   <v-snackbar
     v-model="showSnackbar"
     :color="type"
+    multi-line
   >
     <v-icon v-if="type === 'success'">
       check
@@ -36,27 +37,6 @@ export default {
       this.showSnackbar = true
     }
   }
-  // computed: {
-  //   showSnackbar: {
-  //     get: function() {
-  //       return this.show
-  //     },
-  //     set: function(value) {
-  //       console.log(value)
-  //       this.$emit('updateShow', value)
-  //     }
-  //   }
-  // }
-  // watch: {
-  //   show: function(value) {
-  //     console.log(value)
-  //     // this.showSnackbar = value
-  //   },
-  //   showSnackbar: function(value) {
-  //     console.log(value)
-  //     this.$emit('updateShow', value)
-  //   }
-  // }
 }
 </script>
 

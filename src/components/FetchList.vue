@@ -22,6 +22,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+import {getErrorMessage} from '../utils'
+
 export default {
   data: () => ({
     username: "",
@@ -29,7 +32,50 @@ export default {
   }),
   methods: {
     handleSubmit: function() {
-      console.log(this.username)
+      if (!this.username) {
+        this.$emit('showSnackbar', 'error', 'Username cannot be empty')
+        return
+      }
+
+      this.loading = true;
+
+      var query = `
+      query ($userName: String) {
+        MediaListCollection(userName: $userName, type: ANIME, status:COMPLETED) {
+          lists {
+            name
+            entries {
+              media {
+                id
+                title {
+                  userPreferred
+                }
+              }
+            }
+          }
+        }
+      }
+      `;
+
+      var variables = {
+        userName: this.username
+      };
+
+      let success = false
+
+      axios.post("https://graphql.anilist.co", { query, variables }).then(res => {
+        success = true
+        this.loading = false;
+        const idList = res.data.data.MediaListCollection.lists[0].entries.map(entry => entry.media.id)
+        this.$emit('setList', idList)
+      }).catch(err => {
+        if (!success) {
+          this.loading = false;
+          this.$emit('showSnackbar', 'error', getErrorMessage(err))
+        } else if (err) {
+          this.$emit('showSnackbar', 'error', String(err))
+        }
+      });
     }
   }
 };

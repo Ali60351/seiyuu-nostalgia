@@ -15,7 +15,7 @@
             item-value="id"
             return-object
             hide-no-data
-            :loading="isLoading"
+            :loading="loading"
             @change="handleSelect"
             @blur="results = []"
           >
@@ -42,7 +42,7 @@ export default {
   data: () => ({
     search: "",
     selectedValue: "",
-    isLoading: false,
+    loading: false,
     results: [
       // {
       //   id: 2104,
@@ -62,25 +62,25 @@ export default {
   }),
   methods: {
     handleSubmit: function() {
-      this.isLoading = true;
+      this.loading = true;
 
       var query = `
       query ($search: String) {
-          anime: Page (perPage: 10) {
-              results: media (type: ANIME, search: $search) {
-                  id
-                  title {
-                      userPreferred
-                  }
-                  coverImage {
-                      medium
-                  }
-                  format
-                  startDate {
-                      year
-                  }
-              }
+        anime: Page (perPage: 10) {
+          results: media (type: ANIME, search: $search) {
+            id
+            title {
+              userPreferred
+            }
+            coverImage {
+              medium
+            }
+            format
+            startDate {
+              year
+            }
           }
+        }
       }
       `;
 
@@ -89,7 +89,7 @@ export default {
       };
 
       axios.post("https://graphql.anilist.co", { query, variables }).then(res => {
-          this.isLoading = false;
+          this.loading = false;
           this.results = res.data.data.anime.results;
         });
     },
