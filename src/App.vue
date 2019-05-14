@@ -32,6 +32,14 @@
               @goBack="goBack"
             />
           </v-stepper-content>
+          <v-stepper-content step="3">
+            <CharacterSelect
+              :anime="selectedAnime"
+              @setCharacter="setCharacter"
+              @showSnackbar="showSnackbar"
+              @goBack="goBack"
+            />
+          </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
       <Snackbar ref="snackbar" />
@@ -45,6 +53,7 @@ import StepHeader from "./components/StepHeader";
 import FetchList from "./components/FetchList";
 import Snackbar from "./components/Snackbar";
 import Search from "./components/Search";
+import CharacterSelect from "./components/CharacterSelect";
 
 export default {
   name: "App",
@@ -53,14 +62,20 @@ export default {
     StepHeader,
     FetchList,
     Snackbar,
-    Search
+    Search,
+    CharacterSelect
   },
   data() {
     return {
       step: 1,
       dark: true,
       animeList: [],
-      selectedAnime: {}
+      selectedAnime: {
+        characters: {
+          edges: []
+        }
+      },
+      selectedCharacter: {}
     };
   },
   methods: {
@@ -77,6 +92,10 @@ export default {
     setAnime: function(value) {
       this.selectedAnime = value;
       this.step = 3;
+    },
+    setCharacter: function(value) {
+      this.selectedCharacter = value;
+      this.step = 4
     },
     goBack: function(value) {
       this.step = this.step - 1;
