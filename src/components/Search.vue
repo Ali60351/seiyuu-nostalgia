@@ -7,19 +7,19 @@
       >
         <v-flex xs12>
           <v-autocomplete
+            ref="searchInput"
             v-model="selectedValue"
             :items="results"
             :search-input.sync="search"
             label="Enter Anime You Are Watching"
             item-text="title.userPreferred"
             item-value="id"
-            ref="searchInput"
             return-object
             no-data-text="Submit to search"
             :filter="v => v"
             :loading="loading"
-            @change="handleSelect"
             append-icon="send"
+            @change="handleSelect"
             @click:append="handleSubmit"
           >
             <template v-slot:item="data">
@@ -34,7 +34,10 @@
           </v-autocomplete>
         </v-flex>
         <v-flex xs12>
-          <v-btn block @click="goBack">
+          <v-btn
+            block
+            @click="goBack"
+          >
             Back
           </v-btn>
         </v-flex>
@@ -46,7 +49,7 @@
 <script>
 import axios from "axios";
 import {getErrorMessage} from "../utils";
-import { setTimeout } from 'timers';
+import { setTimeout } from "timers";
 
 export default {
   data: () => ({
@@ -57,7 +60,7 @@ export default {
   }),
   methods: {
     focus: function() {
-      setTimeout(() => {this.$refs.searchInput.focus()}, 500)
+      setTimeout(() => {this.$refs.searchInput.focus();}, 500);
     },
     handleSubmit: function() {
       this.loading = true;

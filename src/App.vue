@@ -89,7 +89,7 @@ export default {
     setList: function(value) {
       this.animeList = value;
       this.step = 2;
-      this.$refs.search.focus()
+      this.$refs.search.focus();
     },
     setAnime: function(value) {
       this.selectedAnime = value;
@@ -97,7 +97,7 @@ export default {
     },
     setCharacter: function(value) {
       this.selectedCharacter = value;
-      this.step = 4
+      this.step = 4;
     },
     goBack: function(value) {
       this.step = this.step - 1;

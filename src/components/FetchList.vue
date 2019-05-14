@@ -8,8 +8,8 @@
         <v-flex xs12>
           <v-form @submit.prevent="handleSubmit">
             <v-text-field
-              autofocus
               v-model="username"
+              autofocus
               append-icon="send"
               label="Enter AnimeList Username"
               :loading="loading"
