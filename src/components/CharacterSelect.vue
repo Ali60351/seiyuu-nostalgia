@@ -7,7 +7,10 @@
       v-for="character in anime.characters.edges"
       :key="character.id"
       pa-2
-      xs2
+      xs6
+      sm4
+      md3
+      lg2
     >
       <v-hover>
         <v-card
