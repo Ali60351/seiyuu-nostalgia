@@ -123,6 +123,9 @@ export default {
               role
               voiceActors {
                 id
+                image {
+                  large
+                }
                 name {
                   first
                   last

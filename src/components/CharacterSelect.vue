@@ -98,6 +98,7 @@ export default {
       if(actors.length) {
         return {
           id: actors[0].id,
+          image: actors[0].image.large,
           name: this.formatName(actors[0].name)
         };
       } else {

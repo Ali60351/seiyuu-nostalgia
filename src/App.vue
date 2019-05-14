@@ -41,6 +41,13 @@
               @goBack="goBack"
             />
           </v-stepper-content>
+          <v-stepper-content step="4">
+            <ResultsPage
+              :character="selectedCharacter"
+              @showSnackbar="showSnackbar"
+              @goBack="goBack"
+            />
+          </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
       <Snackbar ref="snackbar" />
@@ -55,6 +62,7 @@ import FetchList from "./components/FetchList";
 import Snackbar from "./components/Snackbar";
 import Search from "./components/Search";
 import CharacterSelect from "./components/CharacterSelect";
+import ResultsPage from "./components/ResultsPage";
 
 export default {
   name: "App",
@@ -64,7 +72,8 @@ export default {
     FetchList,
     Snackbar,
     Search,
-    CharacterSelect
+    CharacterSelect,
+    ResultsPage
   },
   data() {
     return {
@@ -76,7 +85,14 @@ export default {
           edges: []
         }
       },
-      selectedCharacter: {}
+      selectedCharacter: {
+        id: -1,
+        actor: {
+          id: -1,
+          name: '',
+          image: ''
+        }
+      }
     };
   },
   methods: {
