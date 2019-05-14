@@ -4,11 +4,14 @@
       app
       clipped-left
     >
-      <v-toolbar-side-icon @click="toggleDrawer"/>
+      <v-toolbar-side-icon @click="toggleDrawer" />
       <v-toolbar-title>Seiyuu Nostalgia</v-toolbar-title>
       <v-spacer />
     </v-toolbar>
-    <NavigationDrawer ref="drawer" @switchColor="dark = !dark" />
+    <NavigationDrawer
+      ref="drawer"
+      @switchColor="dark = !dark"
+    />
     <v-content>
       <v-stepper
         v-model="step"
@@ -16,18 +19,18 @@
       >
         <StepHeader :step="step" />
         <v-stepper-items>
-          <v-layout
-            style="min-height:75vh"
-            fill-height
-            justify-center
-            column
-          >
-            <v-flex xs12>
-              <v-stepper-content step="1">
-                <FetchList @setList="setList" @showSnackbar="showSnackbar"/>
-              </v-stepper-content>
-            </v-flex>
-          </v-layout>
+          <v-stepper-content step="1">
+            <FetchList
+              @setList="setList"
+              @showSnackbar="showSnackbar"
+            />
+          </v-stepper-content>
+          <v-stepper-content step="2">
+            <Search
+              @setAnime="setAnime"
+              @showSnackbar="showSnackbar"
+            />
+          </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
       <Snackbar ref="snackbar" />
@@ -40,6 +43,7 @@ import NavigationDrawer from "./components/NavigationDrawer";
 import StepHeader from "./components/StepHeader";
 import FetchList from "./components/FetchList";
 import Snackbar from "./components/Snackbar";
+import Search from "./components/Search";
 
 export default {
   name: "App",
@@ -47,25 +51,31 @@ export default {
     NavigationDrawer,
     StepHeader,
     FetchList,
-    Snackbar
+    Snackbar,
+    Search
   },
   data() {
     return {
       step: 1,
       dark: true,
       animeList: [],
+      selectedAnime: {}
     };
   },
   methods: {
     showSnackbar: function(type, message) {
-      this.$refs.snackbar.show(type, message)
+      this.$refs.snackbar.show(type, message);
     },
     toggleDrawer: function() {
-      this.$refs.drawer.toggleDrawer()
+      this.$refs.drawer.toggleDrawer();
     },
     setList: function(value) {
-      this.animeList = value
-      this.step = 2
+      this.animeList = value;
+      this.step = 2;
+    },
+    setAnime: function(value) {
+      this.selectedAnime = value;
+      this.step = 3;
     }
   }
 };

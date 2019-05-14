@@ -32,12 +32,12 @@ export default {
   }),
   methods: {
     show: function(type, message) {
-      this.type = type
-      this.message = message
-      this.showSnackbar = true
+      this.type = type;
+      this.message = message;
+      this.showSnackbar = true;
     }
   }
-}
+};
 </script>
 
 <style>

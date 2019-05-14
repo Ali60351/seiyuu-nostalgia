@@ -1,12 +1,12 @@
 <template>
   <v-navigation-drawer
+    v-model="drawer"
     persistent
     fixed
     app
     mini-variant
     clipped
     enable-resize-watcher
-    v-model="drawer"
   >
     <v-list>
       <v-list-tile
@@ -51,7 +51,7 @@ export default {
       this.$emit("switchColor");
     },
     toggleDrawer: function() {
-      this.drawer = !this.drawer
+      this.drawer = !this.drawer;
     }
   }
 };

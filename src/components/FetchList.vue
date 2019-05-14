@@ -8,11 +8,11 @@
         <v-flex xs12>
           <v-form @submit.prevent="handleSubmit">
             <v-text-field
+              v-model="username"
               append-icon="send"
               label="Enter AnimeList Username"
               :loading="loading"
               @click:append="handleSubmit"
-              v-model="username"
             />
           </v-form>
         </v-flex>
@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-import {getErrorMessage} from '../utils'
+import axios from "axios";
+import {getErrorMessage} from "../utils";
 
 export default {
   data: () => ({
@@ -33,8 +33,8 @@ export default {
   methods: {
     handleSubmit: function() {
       if (!this.username) {
-        this.$emit('showSnackbar', 'error', 'Username cannot be empty')
-        return
+        this.$emit("showSnackbar", "error", "Username cannot be empty");
+        return;
       }
 
       this.loading = true;
@@ -61,19 +61,19 @@ export default {
         userName: this.username
       };
 
-      let success = false
+      let success = false;
 
       axios.post("https://graphql.anilist.co", { query, variables }).then(res => {
-        success = true
+        success = true;
         this.loading = false;
-        const idList = res.data.data.MediaListCollection.lists[0].entries.map(entry => entry.media.id)
-        this.$emit('setList', idList)
+        const idList = res.data.data.MediaListCollection.lists[0].entries.map(entry => entry.media.id);
+        this.$emit("setList", idList);
       }).catch(err => {
         if (!success) {
           this.loading = false;
-          this.$emit('showSnackbar', 'error', getErrorMessage(err))
+          this.$emit("showSnackbar", "error", getErrorMessage(err));
         } else if (err) {
-          this.$emit('showSnackbar', 'error', String(err))
+          this.$emit("showSnackbar", "error", String(err));
         }
       });
     }
