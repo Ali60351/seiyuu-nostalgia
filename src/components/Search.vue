@@ -13,8 +13,10 @@
             label="Enter Anime You Are Watching"
             item-text="title.userPreferred"
             item-value="id"
+            ref="searchInput"
             return-object
-            hide-no-data
+            no-data-text="Submit to search"
+            :filter="v => v"
             :loading="loading"
             @change="handleSelect"
             append-icon="send"
@@ -44,6 +46,7 @@
 <script>
 import axios from "axios";
 import {getErrorMessage} from "../utils";
+import { setTimeout } from 'timers';
 
 export default {
   data: () => ({
@@ -53,6 +56,9 @@ export default {
     results: []
   }),
   methods: {
+    focus: function() {
+      setTimeout(() => {this.$refs.searchInput.focus()}, 500)
+    },
     handleSubmit: function() {
       this.loading = true;
 
@@ -95,7 +101,7 @@ export default {
       });
     },
     handleSelect: function() {
-      console.log(this.selectedValue);
+      this.results = [];
       this.loading = true;
 
       var query = `
@@ -141,7 +147,6 @@ export default {
         id: this.selectedValue.id
       };
 
-      this.results = [];
       let success = false;
 
       axios.post("https://graphql.anilist.co", { query, variables }).then(res => {

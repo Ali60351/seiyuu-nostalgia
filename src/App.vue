@@ -27,6 +27,7 @@
           </v-stepper-content>
           <v-stepper-content step="2">
             <Search
+              ref="search"
               @setAnime="setAnime"
               @showSnackbar="showSnackbar"
               @goBack="goBack"
@@ -88,6 +89,7 @@ export default {
     setList: function(value) {
       this.animeList = value;
       this.step = 2;
+      this.$refs.search.focus()
     },
     setAnime: function(value) {
       this.selectedAnime = value;
