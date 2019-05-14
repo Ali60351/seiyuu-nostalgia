@@ -4,3 +4,17 @@ export const getErrorMessage = errors =>  {
   else
     return "Connection Failed";
 };
+
+export const formatName = name => {
+  let formattedName = "";
+
+  if(name.first) {
+    formattedName = name.first;
+  }
+
+  if(name.last) {
+    formattedName = `${formattedName} ${name.last}`;
+  }
+
+  return formattedName;
+};

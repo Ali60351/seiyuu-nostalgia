@@ -39,7 +39,7 @@
           </v-img>
           <v-card-title primary-title>
             <div>
-              <span>{{ `${formatName(character.node.name)} (${character.role})` }}</span>
+              <span>{{ getCharacterNameAndRole(character) }}</span>
               <br>
               <span class="grey--text">{{ getVoiceActor(character).name }}</span>
             </div>
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import {formatName} from '../utils'
+
 export default {
   props: {
     anime: {
@@ -71,19 +73,6 @@ export default {
     }
   },
   methods: {
-    formatName: function(name) {
-      let formattedName = "";
-
-      if(name.first) {
-        formattedName = name.first;
-      }
-
-      if(name.last) {
-        formattedName = `${formattedName} ${name.last}`;
-      }
-
-      return formattedName;
-    },
     selectedCharacter: function(value) {
       const character = {
         id: value.id,
@@ -92,6 +81,9 @@ export default {
 
       this.$emit("setCharacter", character);
     },
+    getCharacterNameAndRole: function(character) {
+      return `${formatName(character.node.name)} (${character.role})`;
+    },
     getVoiceActor: function(character) {
       const actors = character.voiceActors;
 
@@ -99,7 +91,7 @@ export default {
         return {
           id: actors[0].id,
           image: actors[0].image.large,
-          name: this.formatName(actors[0].name)
+          name: formatName(actors[0].name)
         };
       } else {
         return {
