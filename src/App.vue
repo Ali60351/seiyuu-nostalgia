@@ -29,6 +29,7 @@
             <Search
               @setAnime="setAnime"
               @showSnackbar="showSnackbar"
+              @goBack="goBack"
             />
           </v-stepper-content>
         </v-stepper-items>
@@ -76,6 +77,9 @@ export default {
     setAnime: function(value) {
       this.selectedAnime = value;
       this.step = 3;
+    },
+    goBack: function(value) {
+      this.step = this.step - 1;
     }
   }
 };

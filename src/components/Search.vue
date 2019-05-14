@@ -10,14 +10,15 @@
             v-model="selectedValue"
             :items="results"
             :search-input.sync="search"
-            label="Search"
+            label="Enter Anime You Are Watching"
             item-text="title.userPreferred"
             item-value="id"
             return-object
             hide-no-data
             :loading="loading"
             @change="handleSelect"
-            @blur="results = []"
+            append-icon="send"
+            @click:append="handleSubmit"
           >
             <template v-slot:item="data">
               <v-list-tile-avatar tile>
@@ -30,6 +31,11 @@
             </template>
           </v-autocomplete>
         </v-flex>
+        <v-flex xs12>
+          <v-btn block @click="goBack">
+            Back
+          </v-btn>
+        </v-flex>
       </v-layout>
     </v-container>
   </v-form>
@@ -37,28 +43,14 @@
 
 <script>
 import axios from "axios";
+import {getErrorMessage} from "../utils";
 
 export default {
   data: () => ({
     search: "",
     selectedValue: "",
     loading: false,
-    results: [
-      // {
-      //   id: 2104,
-      //   title: {
-      //     userPreferred: "Seto no Hanayome"
-      //   },
-      //   coverImage: {
-      //     medium:
-      //       "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/2104.jpg"
-      //   },
-      //   format: "TV",
-      //   startDate: {
-      //     year: 2007
-      //   }
-      // }
-    ]
+    results: []
   }),
   methods: {
     handleSubmit: function() {
@@ -88,13 +80,84 @@ export default {
         search: this.search
       };
 
+      let success = false;
+
       axios.post("https://graphql.anilist.co", { query, variables }).then(res => {
+        this.loading = false;
+        this.results = res.data.data.anime.results;
+      }).catch(err => {
+        if (!success) {
           this.loading = false;
-          this.results = res.data.data.anime.results;
-        });
+          this.$emit("showSnackbar", "error", getErrorMessage(err));
+        } else if (err) {
+          this.$emit("showSnackbar", "error", String(err));
+        }
+      });
     },
     handleSelect: function() {
       console.log(this.selectedValue);
+      this.loading = true;
+
+      var query = `
+      query ($id:Int) {
+        Media(id: $id) {
+          id
+          title {
+            romaji
+            english
+            native
+            userPreferred
+          }
+          characters {
+            edges {
+              id
+              role
+              voiceActors {
+                id
+                name {
+                  first
+                  last
+                  native
+                }
+              }
+              node {
+                id
+                image {
+                  large
+                }
+                name {
+                  first
+                  last
+                  native
+                }
+              }
+            }
+          }
+        }
+      }
+      `;
+
+      var variables = {
+        id: this.selectedValue.id
+      };
+
+      this.results = [];
+      let success = false;
+
+      axios.post("https://graphql.anilist.co", { query, variables }).then(res => {
+        this.loading = false;
+        this.$emit("setAnime", res.data.data.Media);
+      }).catch(err => {
+        if (!success) {
+          this.loading = false;
+          this.$emit("showSnackbar", "error", getErrorMessage(err));
+        } else if (err) {
+          this.$emit("showSnackbar", "error", String(err));
+        }
+      });
+    },
+    goBack: function() {
+      this.$emit("goBack");
     }
   }
 };
