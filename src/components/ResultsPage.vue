@@ -73,6 +73,9 @@
 </template>
 
 <script>
+import axios from "axios";
+import {getErrorMessage} from "../utils";
+
 export default {
   props: {
     character: {
@@ -96,6 +99,93 @@ export default {
         // }
       ]
     };
+  },
+  watch: {
+    character: function(value) {
+      if (value.actor.id !== -1) {
+        this.fetchResults()
+      }
+    }
+  },
+  methods: {
+    fetchResults: function(page=1) {
+      if (page === 1) {
+        this.results = [];
+      }
+
+      this.loading = true;
+
+      var query = `
+      query staff($id: Int, $characterPage:Int) {
+        Staff(id: $id) {
+          id
+          name {
+            first
+            last
+            native
+          }
+          image {
+            large
+          }
+
+          characters(page: $characterPage) {
+            pageInfo {
+              total
+              perPage
+              currentPage
+              lastPage
+              hasNextPage
+            }
+            edges {
+              role
+              media {
+                id
+                type
+                title {
+                  userPreferred
+                }
+                coverImage {
+                  large
+                }
+              }
+              node {
+                id
+                name {
+                  first
+                  last
+                }
+                image {
+                  large
+                }
+              }
+            }
+          }
+        }
+      }
+      `;
+
+      var variables = {
+        "characterPage": page,
+        "id": this.character.actor.id
+      };
+
+      let success = false;
+
+      axios.post("https://graphql.anilist.co", { query, variables }).then(res => {
+        this.loading = false;
+        this.processResults(res.data.data);
+      }).catch(err => {
+        if (!success) {
+          this.loading = false;
+          this.$emit("showSnackbar", "error", getErrorMessage(err));
+        } else if (err) {
+          this.$emit("showSnackbar", "error", String(err));
+        }
+      });
+    },
+    processResults: function(results) {
+      console.log(results);
+    }
   }
 }
 </script>
