@@ -60,11 +60,19 @@
         </v-card-title>
       </v-card>
     </v-flex>
-    <div class="progress">
+    <v-flex xs12>
+      <v-btn
+        block
+        @click="goBack"
+      >
+        Back
+      </v-btn>
+    </v-flex>
+    <div class="progress" v-if="loading">
       <v-layout align-center justify-center row fill-height wrap>
         <v-flex xs12>
           <div class="text-xs-center">
-            <v-progress-circular style="text-align: center;" v-if="loading" :size="50" :width="5" indeterminate/>
+            <v-progress-circular style="text-align: center;" :size="50" :width="5" indeterminate/>
           </div>
         </v-flex>
       </v-layout>
@@ -74,7 +82,7 @@
 
 <script>
 import axios from "axios";
-import {getErrorMessage} from "../utils";
+import {getErrorMessage, formatName} from "../utils";
 
 export default {
   props: {
@@ -108,6 +116,9 @@ export default {
     }
   },
   methods: {
+    goBack: function() {
+      this.$emit("goBack");
+    },
     fetchResults: function(page=1) {
       if (page === 1) {
         this.results = [];
@@ -173,7 +184,12 @@ export default {
 
       axios.post("https://graphql.anilist.co", { query, variables }).then(res => {
         this.loading = false;
+        let success = true;
         this.processResults(res.data.data);
+
+        if (res.data.data.Staff.characters.pageInfo.lastPage !== page) {
+          this.fetchResults(page + 1);
+        }
       }).catch(err => {
         if (!success) {
           this.loading = false;
@@ -184,7 +200,17 @@ export default {
       });
     },
     processResults: function(results) {
-      console.log(results);
+      results.Staff.characters.edges.forEach(character => {
+        if (character.media.length && this.animeList.indexOf(character.media[0].id) !== -1 &&
+          character.node.id !== this.character.id) {
+          this.results.push({
+            id: character.node.id,
+            name: formatName(character.node.name),
+            image: character.node.image.large,
+            anime: character.media[0].title.userPreferred
+          })
+        }
+      });
     }
   }
 }

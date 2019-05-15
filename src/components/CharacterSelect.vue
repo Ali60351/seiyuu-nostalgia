@@ -75,7 +75,7 @@ export default {
   methods: {
     selectedCharacter: function(value) {
       const character = {
-        id: value.id,
+        id: value.node.id,
         actor: this.getVoiceActor(value)
       };
 
@@ -101,6 +101,7 @@ export default {
       }
     },
     goBack: function() {
+      console.log(123)
       this.$emit("goBack");
     }
   }

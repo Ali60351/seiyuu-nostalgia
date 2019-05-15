@@ -25,7 +25,7 @@
       :complete="step > 4"
       step="4"
     >
-      Profit?
+      Results
     </v-stepper-step>
   </v-stepper-header>
 </template>
