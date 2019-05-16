@@ -83,6 +83,7 @@
 <script>
 import axios from "axios";
 import {getErrorMessage, formatName} from "../utils";
+import {Enums} from "../constants";
 
 export default {
   props: {
@@ -93,6 +94,10 @@ export default {
     animeList: {
       type: Array,
       default: []
+    },
+    mode: {
+      type: String,
+      default: Enums.Mode.AL
     }
   },
   data: function() {
@@ -200,10 +205,21 @@ export default {
         }
       });
     },
+    hasCompleted: function(media) {
+      if (!media.length) {
+        return false
+      }
+
+      const targetKey = {
+        [Enums.Mode.AL]: 'id',
+        [Enums.Mode.MAL]: 'idMal'
+      }
+
+      return this.animeList.indexOf(media[0][targetKey[this.mode]]) !== -1;
+    },
     processResults: function(results) {
       results.Staff.characters.edges.forEach(character => {
-        if (character.media.length && this.animeList.indexOf(character.media[0].id) !== -1 &&
-          character.node.id !== this.character.id) {
+        if (this.hasCompleted(character.media) && character.node.id !== this.character.id) {
           this.results.push({
             id: character.node.id,
             name: formatName(character.node.name),
