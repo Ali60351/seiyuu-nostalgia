@@ -6,6 +6,12 @@
         wrap
       >
         <v-flex xs12>
+          <p>Select Source</p>
+          <v-radio-group v-model="selectedMode" row @change="switchMode">
+            <v-radio v-for="radio in radios" :key="radio.value" :label="radio.label" :value="radio.value"></v-radio>
+          </v-radio-group>
+        </v-flex>
+        <v-flex xs12>
           <v-form @submit.prevent="handleSubmit">
             <v-text-field
               v-model="username"
@@ -25,13 +31,37 @@
 <script>
 import axios from "axios";
 import {getErrorMessage} from "../utils";
+import {Enums, Dictionaries} from "../constants";
 
 export default {
+  props: {
+    mode: {
+      type: String,
+      default: Enums.Mode.AL
+    }
+  },
+  computed: {
+    selectedMode: {
+      get: function() {
+        return this.mode;
+      },
+      set: function(value) {
+        this.$emit('setMode', value)
+      }
+    }
+  },
   data: () => ({
     username: "",
-    loading: false
+    loading: false,
+    radios: Object.keys(Dictionaries.Mode).map(key => ({
+      label: key,
+      value: Dictionaries.Mode[key]
+    }))
   }),
   methods: {
+    switchMode: function(value) {
+      console.log(value)
+    },
     handleSubmit: function() {
       if (!this.username) {
         this.$emit("showSnackbar", "error", "Username cannot be empty");

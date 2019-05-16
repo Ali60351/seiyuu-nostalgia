@@ -21,6 +21,8 @@
         <v-stepper-items>
           <v-stepper-content step="1">
             <FetchList
+              :mode="mode"
+              @setMode="setMode"
               @setList="setList"
               @showSnackbar="showSnackbar"
             />
@@ -57,6 +59,8 @@
 </template>
 
 <script>
+import {Enums} from './constants';
+
 import NavigationDrawer from "./components/NavigationDrawer";
 import StepHeader from "./components/StepHeader";
 import FetchList from "./components/FetchList";
@@ -81,6 +85,7 @@ export default {
       step: 1,
       dark: true,
       animeList: [],
+      mode: Enums.Mode.AL,
       selectedAnime: {
         characters: {
           edges: []
@@ -118,6 +123,9 @@ export default {
     },
     goBack: function(value) {
       this.step = this.step - 1;
+    },
+    setMode: function(value) {
+      this.mode = value
     }
   }
 };

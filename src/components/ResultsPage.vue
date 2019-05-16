@@ -151,6 +151,7 @@ export default {
               role
               media {
                 id
+                idMal
                 type
                 title {
                   userPreferred
