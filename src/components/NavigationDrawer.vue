@@ -23,12 +23,19 @@
           <v-list-tile-title>{{ item.title }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
+      <InfoDialog/>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
+
+import InfoDialog from './InfoDialog';
+
 export default {
+  components: {
+    InfoDialog
+  },
   data: function() {
     return {
       drawer: true,
