@@ -7,7 +7,7 @@
       >
         <v-flex xs12>
           <p>Select Source</p>
-          <v-radio-group v-model="selectedMode" row @change="switchMode">
+          <v-radio-group v-model="selectedMode" row>
             <v-radio v-for="radio in radios" :key="radio.value" :label="radio.label" :value="radio.value"></v-radio>
           </v-radio-group>
         </v-flex>
@@ -17,7 +17,7 @@
               v-model="username"
               autofocus
               append-icon="send"
-              label="Enter AnimeList Username"
+              :label="`Enter ${mode} Username`"
               :loading="loading"
               @click:append="handleSubmit"
             />
@@ -32,6 +32,7 @@
 import axios from "axios";
 import {getErrorMessage} from "../utils";
 import {Enums, Dictionaries} from "../constants";
+import { async } from 'q';
 
 export default {
   props: {
@@ -59,15 +60,19 @@ export default {
     }))
   }),
   methods: {
-    switchMode: function(value) {
-      console.log(value)
-    },
     handleSubmit: function() {
       if (!this.username) {
         this.$emit("showSnackbar", "error", "Username cannot be empty");
         return;
       }
 
+      if(this.mode === Enums.Mode.AL) {
+        this.fetchALUser()
+      } else if (this.mode === Enums.Mode.MAL) {
+        this.fetchMALUser()
+      }
+    },
+    fetchALUser: function() {
       this.loading = true;
 
       var query = `
@@ -107,6 +112,33 @@ export default {
           this.$emit("showSnackbar", "error", String(err));
         }
       });
+    },
+    fetchMALUser: async function() {
+      let complete = false;
+      let offset = 0;
+      const idList = [];
+      this.loading = true;
+
+      while(!complete) {
+        try {
+          const url = `https://api.jikan.moe/v3/user/${this.username}/animelist/completed/${offset}`
+          const results = await axios.get(url)
+
+          results.data.anime.forEach(anime => idList.push(anime.mal_id))
+
+          if (results.data.anime.length < 300) {
+            complete = true;
+          } else {
+            offset += 300;
+          }
+        } catch (err) {
+          this.$emit("showSnackbar", "error", String(err));
+          complete = true;
+        }
+      }
+
+      this.loading = false;
+      this.$emit("setList", idList);
     }
   }
 };

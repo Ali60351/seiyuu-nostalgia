@@ -45,6 +45,7 @@
           </v-stepper-content>
           <v-stepper-content step="4">
             <ResultsPage
+              :mode="mode"
               :animeList="animeList"
               :character="selectedCharacter"
               @showSnackbar="showSnackbar"
