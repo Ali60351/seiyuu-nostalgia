@@ -34,6 +34,15 @@
           <br/>
           <br/>
           You can report issues to me via Reddit. My username is /u/ali60351
+          <br/>
+          <br/>
+          NOTE:
+          <br/>
+          Username is required to fetch the Anime you have watched previously.
+          <br/>
+          The results showed in the last screen only include the characters from Anime you watched is the past.
+          <br/>
+          Japanese voice actors and prioritized over others.
         </v-card-text>
       </v-card>
     </v-dialog>

@@ -121,7 +121,7 @@ export default {
             edges {
               id
               role
-              voiceActors {
+              voiceActors (language: JAPANESE) {
                 id
                 image {
                   large
