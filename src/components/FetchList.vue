@@ -115,13 +115,13 @@ export default {
     },
     fetchMALUser: async function() {
       let complete = false;
-      let offset = 0;
+      let page = 1;
       const idList = [];
       this.loading = true;
 
       while(!complete) {
         try {
-          const url = `https://api.jikan.moe/v3/user/${this.username}/animelist/completed/${offset}`
+          const url = `https://api.jikan.moe/v3/user/${this.username}/animelist/completed/${page}`
           const results = await axios.get(url)
 
           results.data.anime.forEach(anime => idList.push(anime.mal_id))
@@ -129,7 +129,7 @@ export default {
           if (results.data.anime.length < 300) {
             complete = true;
           } else {
-            offset += 300;
+            page += 1;
           }
         } catch (err) {
           this.$emit("showSnackbar", "error", String(err));
