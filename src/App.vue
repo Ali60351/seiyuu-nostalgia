@@ -46,7 +46,7 @@
           <v-stepper-content step="4">
             <ResultsPage
               :mode="mode"
-              :animeList="animeList"
+              :anime-list="animeList"
               :character="selectedCharacter"
               @showSnackbar="showSnackbar"
               @goBack="goBack"
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import {Enums} from './constants';
+import {Enums} from "./constants";
 
 import NavigationDrawer from "./components/NavigationDrawer";
 import StepHeader from "./components/StepHeader";
@@ -96,8 +96,8 @@ export default {
         id: -1,
         actor: {
           id: -1,
-          name: '',
-          image: ''
+          name: "",
+          image: ""
         }
       }
     };
@@ -126,7 +126,7 @@ export default {
       this.step = this.step - 1;
     },
     setMode: function(value) {
-      this.mode = value
+      this.mode = value;
     }
   }
 };

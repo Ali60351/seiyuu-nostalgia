@@ -1,13 +1,27 @@
 <template>
-  <v-layout row wrap>
-    <v-flex pa-2 xs12>
+  <v-layout
+    row
+    wrap
+  >
+    <v-flex
+      pa-2
+      xs12
+    >
       <v-card>
-        <v-layout align-center justify-center row fill-height>
-          <v-flex pa-2 xs1>
+        <v-layout
+          align-center
+          justify-center
+          row
+          fill-height
+        >
+          <v-flex
+            pa-2
+            xs1
+          >
             <v-img
               :src="character.actor.image"
               aspect-ratio="0.65"
-            ></v-img>
+            />
           </v-flex>
           <v-flex xs11>
             <v-card-title primary-title>
@@ -16,7 +30,9 @@
                 column
                 justify-center
               >
-                <h3 class="headline text-xs-center">{{character.actor.name}}</h3>
+                <h3 class="headline text-xs-center">
+                  {{ character.actor.name }}
+                </h3>
               </v-layout>
             </v-card-title>
           </v-flex>
@@ -53,9 +69,9 @@
         </v-img>
         <v-card-title primary-title>
           <div>
-            <span>{{result.name}}</span>
+            <span>{{ result.name }}</span>
             <br>
-            <span class="grey--text">{{result.anime}}</span>
+            <span class="grey--text">{{ result.anime }}</span>
           </div>
         </v-card-title>
       </v-card>
@@ -68,11 +84,25 @@
         Back
       </v-btn>
     </v-flex>
-    <div class="progress" v-if="loading">
-      <v-layout align-center justify-center row fill-height wrap>
+    <div
+      v-if="loading"
+      class="progress"
+    >
+      <v-layout
+        align-center
+        justify-center
+        row
+        fill-height
+        wrap
+      >
         <v-flex xs12>
           <div class="text-xs-center">
-            <v-progress-circular style="text-align: center;" :size="50" :width="5" indeterminate/>
+            <v-progress-circular
+              style="text-align: center;"
+              :size="50"
+              :width="5"
+              indeterminate
+            />
           </div>
         </v-flex>
       </v-layout>
@@ -93,7 +123,7 @@ export default {
     },
     animeList: {
       type: Array,
-      default: []
+      default: () => []
     },
     mode: {
       type: String,
@@ -116,7 +146,7 @@ export default {
   watch: {
     character: function(value) {
       if (value.actor.id !== -1) {
-        this.fetchResults()
+        this.fetchResults();
       }
     }
   },
@@ -207,13 +237,13 @@ export default {
     },
     hasCompleted: function(media) {
       if (!media.length) {
-        return false
+        return false;
       }
 
       const targetKey = {
-        [Enums.Mode.AL]: 'id',
-        [Enums.Mode.MAL]: 'idMal'
-      }
+        [Enums.Mode.AL]: "id",
+        [Enums.Mode.MAL]: "idMal"
+      };
 
       return this.animeList.indexOf(media[0][targetKey[this.mode]]) !== -1;
     },
@@ -225,12 +255,12 @@ export default {
             name: formatName(character.node.name),
             image: character.node.image.large,
             anime: character.media[0].title.userPreferred
-          })
+          });
         }
       });
     }
   }
-}
+};
 </script>
 
 <style>

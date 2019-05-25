@@ -7,8 +7,16 @@
       >
         <v-flex xs12>
           <p>Select Source</p>
-          <v-radio-group v-model="selectedMode" row>
-            <v-radio v-for="radio in radios" :key="radio.value" :label="radio.label" :value="radio.value"></v-radio>
+          <v-radio-group
+            v-model="selectedMode"
+            row
+          >
+            <v-radio
+              v-for="radio in radios"
+              :key="radio.value"
+              :label="radio.label"
+              :value="radio.value"
+            />
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
@@ -32,23 +40,13 @@
 import axios from "axios";
 import {getErrorMessage} from "../utils";
 import {Enums, Dictionaries} from "../constants";
-import { async } from 'q';
+import { async } from "q";
 
 export default {
   props: {
     mode: {
       type: String,
       default: Enums.Mode.AL
-    }
-  },
-  computed: {
-    selectedMode: {
-      get: function() {
-        return this.mode;
-      },
-      set: function(value) {
-        this.$emit('setMode', value)
-      }
     }
   },
   data: () => ({
@@ -59,6 +57,16 @@ export default {
       value: Dictionaries.Mode[key]
     }))
   }),
+  computed: {
+    selectedMode: {
+      get: function() {
+        return this.mode;
+      },
+      set: function(value) {
+        this.$emit("setMode", value);
+      }
+    }
+  },
   methods: {
     handleSubmit: function() {
       if (!this.username) {
@@ -67,9 +75,9 @@ export default {
       }
 
       if(this.mode === Enums.Mode.AL) {
-        this.fetchALUser()
+        this.fetchALUser();
       } else if (this.mode === Enums.Mode.MAL) {
-        this.fetchMALUser()
+        this.fetchMALUser();
       }
     },
     fetchALUser: function() {
@@ -121,10 +129,10 @@ export default {
 
       while(!complete) {
         try {
-          const url = `https://api.jikan.moe/v3/user/${this.username}/animelist/completed/${page}`
-          const results = await axios.get(url)
+          const url = `https://api.jikan.moe/v3/user/${this.username}/animelist/completed/${page}`;
+          const results = await axios.get(url);
 
-          results.data.anime.forEach(anime => idList.push(anime.mal_id))
+          results.data.anime.forEach(anime => idList.push(anime.mal_id));
 
           if (results.data.anime.length < 300) {
             complete = true;

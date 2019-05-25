@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import {formatName} from '../utils'
+import {formatName} from "../utils";
 
 export default {
   props: {
@@ -101,7 +101,6 @@ export default {
       }
     },
     goBack: function() {
-      console.log(123)
       this.$emit("goBack");
     }
   }

@@ -22,26 +22,28 @@
         <v-card-title
           primary-title
         >
-          <h3 class="headline text-xs-center">Purpose</h3>
+          <h3 class="headline text-xs-center">
+            Purpose
+          </h3>
         </v-card-title>
         <v-card-text>
           While watching a new Anime have you ever felt that you have heard the voice of a specfic character
           somewhere before and got curious about it? This website is exists exactly to sate that curiosity.
-          <br/>
-          <br/>
+          <br>
+          <br>
           If you want to know about it in more detail then click the first icon in the sidebar click or
           <a href="https://github.com/Ali60351/seiyuu-nostalgia">here</a>.
-          <br/>
-          <br/>
+          <br>
+          <br>
           You can report issues to me via Reddit. My username is /u/ali60351
-          <br/>
-          <br/>
+          <br>
+          <br>
           NOTE:
-          <br/>
+          <br>
           Username is required to fetch the Anime you have watched previously.
-          <br/>
+          <br>
           The results showed in the last screen only include the characters from Anime you watched is the past.
-          <br/>
+          <br>
           Japanese voice actors and prioritized over others.
         </v-card-text>
       </v-card>
@@ -54,9 +56,9 @@
     data () {
       return {
         dialog: false
-      }
+      };
     }
-  }
+  };
 </script>
 
 <style>
