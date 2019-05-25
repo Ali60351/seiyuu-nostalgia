@@ -13,7 +13,7 @@
         v-for="item in items"
         :key="item.title"
         ripple
-        :href="typeof item.action === 'string' ? item.action : 'javascript:void(0)'"
+        :href="item.link"
         @click="item.action"
       >
         <v-list-tile-action>
@@ -43,12 +43,14 @@ export default {
         {
           title: "New t",
           icon: "mdi-github-circle",
-          action: "https://github.com/Ali60351/seiyuu-nostalgia"
+          action: () => {},
+          link: "https://github.com/Ali60351/seiyuu-nostalgia"
         },
         {
           title: "New",
           icon: "invert_colors",
-          action: this.switchColor
+          action: this.switchColor,
+          link: "javascript:void(0)"
         }
       ]
     };
