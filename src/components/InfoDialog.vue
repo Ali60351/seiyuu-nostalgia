@@ -31,7 +31,7 @@
           somewhere before and got curious about it? This website is exists exactly to sate that curiosity.
           <br>
           <br>
-          If you want to know about it in more detail then click the first icon in the sidebar click or
+          If you want to know about it in more detail then click the first icon in the sidebar or click
           <a href="https://github.com/Ali60351/seiyuu-nostalgia">here</a>.
           <br>
           <br>
@@ -44,7 +44,7 @@
           <br>
           The results showed in the last screen only include the characters from Anime you watched is the past.
           <br>
-          Japanese voice actors and prioritized over others.
+          Japanese voice actors are prioritized over others.
         </v-card-text>
       </v-card>
     </v-dialog>
