@@ -20,7 +20,7 @@
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
-          <p>Select Language</p>
+          <p>Select Language (Sub / Dub)</p>
           <v-radio-group
             v-model="selectedLanguage"
             row

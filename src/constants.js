@@ -15,7 +15,7 @@ export const Dictionaries = {
     "AniList (AL)": Enums.Mode.AL
   },
   Languages: {
-    English: Enums.Languages.ENGLISH,
     Japanese: Enums.Languages.JAPANESE,
+    English: Enums.Languages.ENGLISH,
   }
 };
