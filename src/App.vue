@@ -22,7 +22,9 @@
           <v-stepper-content step="1">
             <FetchList
               :mode="mode"
+              :language="language"
               @setMode="setMode"
+              @setLanguage="setLanguage"
               @setList="setList"
               @showSnackbar="showSnackbar"
             />
@@ -30,6 +32,7 @@
           <v-stepper-content step="2">
             <Search
               ref="search"
+              :language="language"
               @setAnime="setAnime"
               @showSnackbar="showSnackbar"
               @goBack="goBack"
@@ -87,6 +90,7 @@ export default {
       dark: true,
       animeList: [],
       mode: Enums.Mode.AL,
+      language: Enums.Languages.JAPANESE,
       selectedAnime: {
         characters: {
           edges: []
@@ -127,7 +131,10 @@ export default {
     },
     setMode: function(value) {
       this.mode = value;
-    }
+    },
+    setLanguage: function(value) {
+      this.language = value;
+    },
   }
 };
 </script>

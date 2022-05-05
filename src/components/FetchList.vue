@@ -20,6 +20,20 @@
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
+          <p>Select Language</p>
+          <v-radio-group
+            v-model="selectedLanguage"
+            row
+          >
+            <v-radio
+              v-for="radio in languageRadios"
+              :key="radio.value"
+              :label="radio.label"
+              :value="radio.value"
+            />
+          </v-radio-group>
+        </v-flex>
+        <v-flex xs12>
           <v-form @submit.prevent="handleSubmit">
             <v-text-field
               v-model="username"
@@ -40,13 +54,16 @@
 import axios from "axios";
 import {getErrorMessage} from "../utils";
 import {Enums, Dictionaries} from "../constants";
-import { async } from "q";
 
 export default {
   props: {
     mode: {
       type: String,
       default: Enums.Mode.AL
+    },
+    language: {
+      type: String,
+      default: Enums.Languages.JAPANESE
     }
   },
   data: () => ({
@@ -55,7 +72,11 @@ export default {
     radios: Object.keys(Dictionaries.Mode).map(key => ({
       label: key,
       value: Dictionaries.Mode[key]
-    }))
+    })),
+    languageRadios: Object.keys(Dictionaries.Languages).map(key => ({
+      label: key,
+      value: Dictionaries.Languages[key]
+    })),
   }),
   computed: {
     selectedMode: {
@@ -64,6 +85,14 @@ export default {
       },
       set: function(value) {
         this.$emit("setMode", value);
+      }
+    },
+    selectedLanguage: {
+      get: function() {
+        return this.language;
+      },
+      set: function(value) {
+        this.$emit("setLanguage", value);
       }
     }
   },

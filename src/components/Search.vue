@@ -50,8 +50,15 @@
 import axios from "axios";
 import {getErrorMessage} from "../utils";
 import { setTimeout } from "timers";
+import { Enums } from "../constants";
 
 export default {
+  props: {
+    language: {
+      type: String,
+      default: Enums.Languages.JAPANESE
+    }
+  },
   data: () => ({
     search: "",
     selectedValue: "",
@@ -108,7 +115,7 @@ export default {
       this.loading = true;
 
       var query = `
-      query ($id:Int) {
+      query ($id:Int, $language: StaffLanguage) {
         Media(id: $id) {
           id
           title {
@@ -121,7 +128,7 @@ export default {
             edges {
               id
               role
-              voiceActors (language: JAPANESE) {
+              voiceActors (language: $language) {
                 id
                 image {
                   large
@@ -150,7 +157,8 @@ export default {
       `;
 
       var variables = {
-        id: this.selectedValue.id
+        id: this.selectedValue.id,
+        language: this.language
       };
 
       let success = false;
